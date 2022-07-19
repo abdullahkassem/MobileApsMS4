@@ -141,6 +141,22 @@ public class PersonalSettings implements Serializable {
         return allTrans;
     }
 
+    public ArrayList<Transactions> getTransByAccount(String AccName) {
+        ArrayList<Transactions> temp = new ArrayList<Transactions>();
+
+        for (FinancialAccount f:getMyAccounts())
+        {
+            if(f.getName() == AccName)
+            {
+                return f.getListOfTransactions();
+            }
+        }
+
+        Log.w(TAG, " Did not find account with this Name" );
+        return null;
+    }
+
+
     String[] getAccountsName()
     {
         if(myAccounts==null)
