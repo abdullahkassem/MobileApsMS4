@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/transactions_tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif"
+        android:text="Tips and \nStats"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/price_suggestions"
+        app:layout_constraintStart_toStartOf="@+id/price_suggestions"
+        app:layout_constraintTop_toBottomOf="@+id/price_suggestions" />
+
+    <TextView
+        android:id="@+id/transactions_tv4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif"
+        android:text="Preferences"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/Prefrences_button"
+        app:layout_constraintStart_toStartOf="@+id/Prefrences_button"
+        app:layout_constraintTop_toBottomOf="@+id/Prefrences_button" />
+
+    <TextView
+        android:id="@+id/transactions_tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif"
+        android:text="Accounts"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/accounts_button"
+        app:layout_constraintStart_toStartOf="@+id/accounts_button"
+        app:layout_constraintTop_toBottomOf="@+id/accounts_button" />
+
+    <ImageButton
+        android:id="@+id/price_suggestions"
+        style="@style/MainImageButtons"
+        android:layout_marginTop="110dp"
+        app:layout_constraintEnd_toEndOf="@+id/transactionsButton"
+        app:layout_constraintTop_toBottomOf="@+id/transactionsButton"
+        app:srcCompat="@drawable/suggestion_logo"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/Prefrences_button"
+        style="@style/MainImageButtons"
+        app:layout_constraintBottom_toBottomOf="@+id/price_suggestions"
+        app:layout_constraintEnd_toEndOf="@+id/accounts_button"
+        app:srcCompat="@drawable/prefrences"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/accounts_button"
+        style="@style/MainImageButtons"
+        android:layout_marginEnd="50dp"
+        android:src="@drawable/accounts_logo"
+        app:layout_constraintBottom_toBottomOf="@+id/transactionsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/transactionsButton"
+        style="@style/MainImageButtons"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="68dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_action_name"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+
+        android:layout_marginBottom="24dp"
+        android:clickable="false"
+        android:indeterminate="false"
+        android:max="100"
+
+        android:scaleY="8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/transactions_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif"
+        android:text="Transactions"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/transactionsButton"
+        app:layout_constraintStart_toStartOf="@+id/transactionsButton"
+        app:layout_constraintTop_toBottomOf="@+id/transactionsButton" />
+
+    <TextView
+        android:id="@+id/Progress_percentage_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="%"
+        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/progressBar" />
+</androidx.constraintlayout.widget.ConstraintLayout>

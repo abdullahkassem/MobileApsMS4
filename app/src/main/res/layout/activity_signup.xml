@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".create_new_acc">
+
+    <EditText
+        android:id="@+id/editTexta"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="59dp"
+        android:layout_marginBottom="16dp"
+        android:focusable="true"
+        android:hint="Enter username"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/editTextb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editTextb"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="17dp"
+        android:hint="Enter Email"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/editTextc"
+        app:layout_constraintEnd_toEndOf="@+id/editTextc"
+        app:layout_constraintStart_toStartOf="@+id/editTextc"
+        app:layout_constraintTop_toBottomOf="@+id/editTexta"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editTextc"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="18dp"
+        android:hint="Enter PassWord"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/editTextd"
+        app:layout_constraintEnd_toEndOf="@+id/editTextd"
+        app:layout_constraintStart_toStartOf="@+id/editTextd"
+        app:layout_constraintTop_toBottomOf="@+id/editTextb"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editTextd"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="57dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="28dp"
+        android:hint="Confirm Password"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextc"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/alreadyhaveanaccount"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="166dp"
+        android:background="#0086FF3B"
+        android:text="Already Have an Account?"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editTextd"
+        app:layout_constraintStart_toStartOf="@+id/register"
+        app:layout_constraintTop_toBottomOf="@+id/register"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="283dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginBottom="14dp"
+        android:background="#0086FF3B"
+        android:text="Register"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/alreadyhaveanaccount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextd"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

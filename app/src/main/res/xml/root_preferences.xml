@@ -1,0 +1,66 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        app:title="User Information">
+
+        <EditTextPreference
+            app:key="Username_pref"
+            app:title="User name"
+            app:defaultValue="Harry"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:key="Email_pref"
+            app:title="Email"
+            app:defaultValue="harry@gmail.com"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="App Settings">
+
+        <SwitchPreferenceCompat
+            app:key="notifications_pref"
+            app:title="Enable Notifications"/>
+    </PreferenceCategory>
+
+
+
+    <PreferenceCategory
+        app:title="Financial settings">
+        <EditTextPreference
+            app:key="Budget_pref"
+            app:title="Budget"
+            app:defaultValue="10000"
+            app:useSimpleSummaryProvider="true"/>
+
+        <SeekBarPreference
+            android:key="usable_percentage_seekbar"
+            android:title="Usable percentage"
+            android:summary="Percentage of your budget you'd like to use for this month"
+            android:defaultValue="100"
+            android:max="125"
+            app:showSeekBarValue="true"
+            app:min="0"/>
+
+        <DropDownPreference
+            android:key="currency_selector"
+            android:title="Select a currency"
+            android:defaultValue="1"
+            app:useSimpleSummaryProvider="true"
+            android:entries="@array/currency_names"
+            android:entryValues="@array/currency_values"/>
+
+
+
+
+
+    </PreferenceCategory>
+
+
+
+
+
+</PreferenceScreen>
