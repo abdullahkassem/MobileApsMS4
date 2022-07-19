@@ -28,7 +28,7 @@ public class FirestoreAPI {
 
     private static FirestoreAPI ourInstance = new FirestoreAPI();
 
-    public String my_UID;
+    private String my_UID;
     DocumentReference myUserDoc;
     PersonalSettings mysettings;
     private static boolean data_loaded;
@@ -37,6 +37,10 @@ public class FirestoreAPI {
     {
         my_UID = "N/A";
         data_loaded = false;
+    }
+
+    public String getMy_UID() {
+        return my_UID;
     }
 
     public static boolean isData_loaded() {
@@ -59,6 +63,7 @@ public class FirestoreAPI {
 
     void LoadData(String s){    //Load user Data from Database
         this.my_UID = s;
+        Log.i(TAG, "LoadData: user Id is "+my_UID);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Query query = db.collection("users").whereEqualTo("uid",my_UID);
         query.get()
@@ -79,24 +84,25 @@ public class FirestoreAPI {
                 });
     }
 
-    public void createUser(String userame, String emailAddress, double usablePercentage, boolean notification, double budget, String currency) {
+    public void createUser(String UID,String userame, String emailAddress, double usablePercentage, boolean notification, double budget, String currency) {
 
+        Log.i(TAG, "createUser started...");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-//        double expense = 0.0;
-//        double income = 0.0;
         double outstandingBalance = 0.0;
 
+        //Creating Default Accounts
+
         Map<String, Object> cash_account = new HashMap<>();
-//        cash_account.put("Expense", expense);
-//        cash_account.put("Income", income);
         cash_account.put("OutstandingBalance", outstandingBalance);
-        cash_account.put("account name", "cash");
+        cash_account.put("account name", "Cash");
+
+        //DocumentReference newUserRef = db.collection("users").document();
 
         db.collection("users")
-                .document(my_UID)
+                .document(UID)
                 .collection("accounts")
-                .document("cash")
+                .document("Cash")
                 .set(cash_account)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -115,12 +121,12 @@ public class FirestoreAPI {
 //        credit_account.put("Expense", expense);
 //        credit_account.put("Income", income);
         credit_account.put("OutstandingBalance", outstandingBalance);
-        credit_account.put("account name", "credit");
+        credit_account.put("account name", "Bank");
 
         db.collection("users")
-                .document(my_UID)
+                .document(UID)
                 .collection("accounts")
-                .document("credit")
+                .document("Bank")
                 .set(credit_account)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -143,13 +149,13 @@ public class FirestoreAPI {
         user.put("currency", currency);
         user.put("email address", emailAddress);
         user.put("notification", notification);
-        user.put("uid", my_UID);
+        user.put("uid", UID);
         user.put("usable percentage", usablePercentage);
         user.put("username", userame);
 
         // Add a new document with a generated ID
         db.collection("users")
-                .document(my_UID)
+                .document(UID)
                 .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -205,30 +211,53 @@ public class FirestoreAPI {
         trans.put("date", date);
         trans.put("amount", amount);
 
-        db.collection("users")
+        DocumentReference newTransRef = db.collection("users")
                 .document(my_UID)
                 .collection("accounts")
                 .document(account)
-                .collection("transactions")
-                .add(trans)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    private static final String TAG = "name";
+                .collection("transactions").document();
 
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    private static final String TAG = "name";
 
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        trans.put("docID",newTransRef.getId());
+
+        newTransRef.set(trans).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG, "DocumentSnapshot added with ID: " + newTransRef.getId() );
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Log.w(TAG, "Error adding document", e);
+
+            }
+        });
+
+//        db.collection("users")
+//                .document(my_UID)
+//                .collection("accounts")
+//                .document(account)
+//                .collection("transactions")
+//                .add(trans)
+//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                    private static final String TAG = "name";
+//
+//                    @Override
+//                    public void onSuccess(DocumentReference documentReference) {
+//                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    private static final String TAG = "name";
+//
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w(TAG, "Error adding document", e);
+//                    }
+//                });
+
     }
-
 
     void deleteTransaction(String docID, String account) {
 
@@ -275,8 +304,7 @@ public class FirestoreAPI {
     {
         String Accname = (String) accountMap.get("account name");
         double OutstandingBalance =(double) accountMap.get("OutstandingBalance");
-//        double Expense =(double) accountMap.get("Expense") ;
-//        double Income =(double) accountMap.get("Income") ;
+
 
         Log.i(TAG, "createFinAcc: outBal read is " + OutstandingBalance);
 
@@ -357,6 +385,7 @@ public class FirestoreAPI {
         double amount =(double) TransMap.get("amount");
         String category =(String) TransMap.get("category");
         Timestamp date_ts = (Timestamp) TransMap.get ("date");
+        String id = (String) TransMap.get("docID");
 
 
 
@@ -365,15 +394,9 @@ public class FirestoreAPI {
         Log.i(TAG, "createFinAcc: date read is " + date);
 
         Transactions t = new Transactions(Transname,amount,category,date_ts);
-
+        t.setDocID(id);
         return t;
     }
 
-
-
-
-    ArrayList<Transactions> getTransactionByAccount(){return null;}
-
-    ArrayList<Transactions> getTransactionByUser(){return null;}
 
 }

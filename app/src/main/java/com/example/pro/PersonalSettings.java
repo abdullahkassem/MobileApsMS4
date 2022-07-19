@@ -2,11 +2,13 @@ package com.example.pro;
 
 import static android.content.ContentValues.TAG;
 
+import android.nfc.cardemulation.CardEmulation;
 import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class PersonalSettings implements Serializable {
 
@@ -32,6 +34,16 @@ public class PersonalSettings implements Serializable {
     }
 
     private PersonalSettings(){
+
+        Categories.add("Food");
+        Categories.add("Household");
+        Categories.add("Social Life");
+        Categories.add("Health");
+        Categories.add("Taxes");
+        Categories.add("Gift");
+        Categories.add("Transportation");
+        Categories.add("Other");
+
 
     }
 
@@ -213,9 +225,11 @@ public class PersonalSettings implements Serializable {
         {
             this.Currency = currStr;
             return true;
+        }else {
+            Log.e(TAG, "Unknown Currency entered will use Default " );
+            setCurrencyByIndex(0);
+            return false;
         }
-        return false;
-
     }
 
     void addAccount(FinancialAccount acc) {

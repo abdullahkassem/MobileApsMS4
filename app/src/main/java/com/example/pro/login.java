@@ -36,6 +36,7 @@ public class login extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser mUser;
     ImageView googlebtn;
+    int counter = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,11 +79,7 @@ public class login extends AppCompatActivity {
                     // intent call to second activity
                     Log.i("login", "onAuthStateChanged: User now logged in and UID is " + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                    if(!b) {
 
-                        b = true;
-                        //User logged in now Load data.
-                    }
                 }
             }
         };
@@ -143,6 +140,8 @@ public class login extends AppCompatActivity {
         nDialog.setCancelable(true);
         nDialog.show();
 
+
+
         Handler handler=new Handler();
         Runnable updateTextRunnable=new Runnable(){
             public void run() {
@@ -157,6 +156,12 @@ public class login extends AppCompatActivity {
                 }
 
                 Log.i(TAG, "run: Data is not loaded yet");
+                counter++;
+                if(counter > 20) {
+                    nDialog.dismiss();
+                    Toast.makeText(login.this, "Cant Load Data", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 handler.postDelayed(this, 200);
             }
         };

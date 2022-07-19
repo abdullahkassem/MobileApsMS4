@@ -1,5 +1,6 @@
 package com.example.pro;
 
+import static android.content.ContentValues.TAG;
 import static com.example.pro.R.layout.activity_add_transaction;
 
 import androidx.annotation.NonNull;
@@ -88,7 +89,8 @@ public class AddTransaction extends AppCompatActivity {
                 p.addTransaction(trans,AccName);
 
                 FirestoreAPI f = FirestoreAPI.getInstance();;
-                f.addTransaction(TransName,TransCategory,Timestamp.now(),Amount,"cash");
+                Log.i(TAG, "onClick: adding transaction to account "+AccName);
+                f.addTransaction(TransName,TransCategory,Timestamp.now(),Amount,AccName);
 
                 Toast toast = Toast.makeText(getApplicationContext(), "Transaction Added", Toast.LENGTH_SHORT);
                 toast.show();

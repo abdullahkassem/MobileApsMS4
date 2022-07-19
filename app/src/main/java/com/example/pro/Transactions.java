@@ -22,6 +22,15 @@ public class Transactions {
     private double amount;
     private String category;
     private String imgURL;
+    private String docID="N/A";
+
+    public String getDocID() {
+        return docID;
+    }
+
+    public void setDocID(String docID) {
+        this.docID = docID;
+    }
 
     public Timestamp getTimestamp() {
         return timestamp;
@@ -63,9 +72,6 @@ public class Transactions {
         return imgURL;
     }
 
-    public void setImgURL(String imgURL) {
-        this.imgURL = imgURL;
-    }
 
     public Transactions(String transname,  double amount, String category, Timestamp ts) {
         this.transname = transname;

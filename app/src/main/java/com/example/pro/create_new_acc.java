@@ -65,8 +65,7 @@ public class create_new_acc extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 PerforAuth();
-                FirestoreAPI f = FirestoreAPI.getInstance();;
-                f.createUser(userName,emailAddress, 0, false, 0, "egp");
+
             }
         });
     }
@@ -94,10 +93,16 @@ public class create_new_acc extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         pd.dismiss();
-                        sendUserbacktologinpage();
                         Toast.makeText(create_new_acc.this, "Signed Up Successfully", Toast.LENGTH_SHORT).show();
                         userName = username;
                         emailAddress = email;
+
+
+
+                        FirestoreAPI f = FirestoreAPI.getInstance();
+                        f.createUser(FirebaseAuth.getInstance().getCurrentUser().getUid(),userName,emailAddress, 0, true, 0, "EGP");
+                        sendUserbacktologinpage();
+
 
                     } else {
                         pd.dismiss();
@@ -117,41 +122,43 @@ public class create_new_acc extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void createUser(String userame, String id, double usable_percentage, boolean notification, double budget, String currency) {
+//    public void createUser(String userame, String id, double usable_percentage, boolean notification, double budget, String currency) {
+//
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        DocumentReference messageRef = db
+//                .collection("users").document("roomA")
+//                .collection("messages").document("message1");
+//        // Create a new user with a first and last name
+//        Map<String, Object> user = new HashMap<>();
+//        user.put("userame", userame);
+//        user.put("uid", id);
+//        user.put("usable_percentage", usable_percentage);
+//        user.put("notification", notification);
+//        user.put("budget", budget);
+//        user.put("currency", currency);
+//
+//        db.collection("users").document("test").collection("messages").add(user);
+//        // Add a new document with a generated ID
+//        db.collection("users")
+//                .add(user)
+//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                    private static final String TAG = "name";
+//
+//                    @Override
+//                    public void onSuccess(DocumentReference documentReference) {
+//                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    private static final String TAG = "name";
+//
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w(TAG, "Error adding document", e);
+//                    }
+//                });
+//    }
+//
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference messageRef = db
-                .collection("users").document("roomA")
-                .collection("messages").document("message1");
-        // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("userame", userame);
-        user.put("uid", id);
-        user.put("usable_percentage", usable_percentage);
-        user.put("notification", notification);
-        user.put("budget", budget);
-        user.put("currency", currency);
-
-        db.collection("users").document("test").collection("messages").add(user);
-        // Add a new document with a generated ID
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    private static final String TAG = "name";
-
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    private static final String TAG = "name";
-
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
-    }
 }
 

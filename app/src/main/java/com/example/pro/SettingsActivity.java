@@ -131,7 +131,7 @@ public class SettingsActivity extends AppCompatActivity {
             s.setPersonalSettings(username,email,notifications_switch,budg,percent,curr);
 
             FirestoreAPI f = FirestoreAPI.getInstance();
-            f.createUser(username,email, percent, notifications_switch, budg, curr);
+            f.createUser(f.getMy_UID(),username,email, percent, notifications_switch, budg, curr);
         }
     }
 }
