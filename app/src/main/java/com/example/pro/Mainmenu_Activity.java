@@ -1,5 +1,7 @@
 package com.example.pro;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,8 +43,9 @@ public class Mainmenu_Activity extends AppCompatActivity implements View.OnClick
         ProgressBar progressBar= (ProgressBar) findViewById(R.id.progressBar);
         TextView percentagetxt = (TextView) findViewById(R.id.Progress_percentage_view);
 
-        ProgressValue = mysettings.CalculateMoneyRemaining() / mysettings.Budget;
+        ProgressValue = mysettings.CalculateMoneyRemaining() / mysettings.getBudget();
         if(Double.isNaN(ProgressValue)) {
+            Log.i(TAG, "onCreate: Progress Value is Nan");
             ProgressValue=99;
         }
 

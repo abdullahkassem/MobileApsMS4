@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PersonalSettings implements Serializable {
 
@@ -13,23 +14,26 @@ public class PersonalSettings implements Serializable {
     private static final PersonalSettings ourInstance = new PersonalSettings();
 
 
-    String UserName = "";
-    String Email = "";
-    boolean Notifications;
-    double Budget;
-    double usablePercentage;
-    String Currency;
-    ArrayList<FinancialAccount> myAccounts = new ArrayList<FinancialAccount>();
+    private String UserName = "";
+    private String Email = "";
+    private boolean Notifications;
+    private double Budget;
+    private double usablePercentage;
+    private String Currency;
+    private ArrayList<FinancialAccount> myAccounts = new ArrayList<FinancialAccount>();
     private double totalAccountsBalance;
     private double moneyRemaining;    //This will be divided among the remaining days
-    ArrayList<String> Categories= new ArrayList<String>();
+    private ArrayList<String> Categories= new ArrayList<String>();
     private ArrayList<Transactions> allTrans = new ArrayList<Transactions>();
+    private ArrayList<String> PossibleCurrencies;
 
     public static PersonalSettings getInstance(){
         return ourInstance;
     }
 
-    private PersonalSettings(){}
+    private PersonalSettings(){
+
+    }
 
     void setPersonalSettings(String username,String Email,boolean nt,double budget,double usable_Percentage,String currency){
         this.UserName = username;
@@ -37,12 +41,54 @@ public class PersonalSettings implements Serializable {
         this.Notifications = nt;
         this.Budget = budget;
         this.usablePercentage = usable_Percentage;
-        this.Currency = currency;
+
+
+        setCurrencyByName(currency);
 
 
     }
 
-    void addTransaction(Transactions t,String accName)
+    void setPossibleCurrencies(String[] arrayFromResource){
+        PossibleCurrencies = new ArrayList<String>( Arrays.asList(arrayFromResource));
+    }
+
+    public String getUserName() {
+        return UserName;
+    }
+
+    public double getBudget() {
+        return Budget;
+    }
+
+    public double getMoneyRemaining() {
+        return moneyRemaining;
+    }
+
+    public ArrayList<FinancialAccount> getMyAccounts() {
+        return myAccounts;
+    }
+
+    public double getTotalAccountsBalance() {
+        return totalAccountsBalance;
+    }
+
+    public double getUsablePercentage() {
+        return usablePercentage;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public String getCurrency() {
+        return Currency;
+    }
+
+    public ArrayList<String> getCategories() {
+        return Categories;
+    }
+
+    void addTransaction(Transactions t, String accName)
     {
         myAccounts.get(searchAccsByName(accName)).addTransaction(t);
     }
@@ -105,7 +151,6 @@ public class PersonalSettings implements Serializable {
         return str_arr;
     }
 
-    void loadPersonalSettings(){}
 
     boolean enterUserName(String s) {
         //Need to check if username is not Used
@@ -118,9 +163,13 @@ public class PersonalSettings implements Serializable {
         return true; //return true if done successfully
     }
 
-    boolean enableNotifications(boolean n){
+    boolean setNotifications(boolean n){
         this.Notifications = n;
         return true;//return true if done successfully
+    }
+
+    public boolean isNotifications() {
+        return Notifications;
     }
 
     boolean setBudget(double number) {
@@ -141,16 +190,32 @@ public class PersonalSettings implements Serializable {
         return true;
     }
 
-    boolean setCurrency(String curr, String[] possibleCurrencies){
+    boolean setCurrencyByIndex(int index){
 
-
-        for (String s : possibleCurrencies) {
-            if (s.equals(curr)) {
-                this.Currency = curr;
-                return true;
-            }
+        if( index < PossibleCurrencies.size() && index>0)
+        {
+            this.Currency = PossibleCurrencies.get(index);
+            return true;
         }
         return false;
+
+    }
+
+    int getCurrIndex(){
+
+        Log.i(TAG, "currency chosen is "+getCurrency()+" and its index in resource array is "+ PossibleCurrencies.indexOf(Currency));
+        return PossibleCurrencies.indexOf(Currency);
+    }
+
+    boolean setCurrencyByName(String currStr){
+
+        if( PossibleCurrencies.contains(currStr))
+        {
+            this.Currency = currStr;
+            return true;
+        }
+        return false;
+
     }
 
     void addAccount(FinancialAccount acc) {

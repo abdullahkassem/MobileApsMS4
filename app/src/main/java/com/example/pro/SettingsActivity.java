@@ -1,11 +1,13 @@
 package com.example.pro;
 
+import android.app.Person;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -47,6 +49,9 @@ public class SettingsActivity extends AppCompatActivity {
         Button Save_button = (Button) findViewById(R.id.save_button);
         Save_button.setOnClickListener(view-> {
             settFrag.SavePreferences();
+            Toast.makeText(getApplicationContext(), "Account updated", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(SettingsActivity.this, Mainmenu_Activity.class);
+            startActivity (i);
         });
 
 
@@ -97,6 +102,13 @@ public class SettingsActivity extends AppCompatActivity {
             usablePercentage = (SeekBarPreference) findPreference("usable_percentage_seekbar");
             currency_select = (DropDownPreference) findPreference("currency_selector");
 
+            PersonalSettings mysett = PersonalSettings.getInstance();
+            username_pref.setText(mysett.getUserName());
+            email_pref.setText(mysett.getEmail());
+            enable_noti.setChecked(mysett.isNotifications());
+            usablePercentage.setValue( (int) mysett.getUsablePercentage() );
+            currency_select.setValueIndex(mysett.getCurrIndex());
+            budget_pref.setText( Double.toString(mysett.getBudget()) );
 
         }
 

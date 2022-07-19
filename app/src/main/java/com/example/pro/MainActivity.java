@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 //        //Add the Transactions objects to an ArrayList
 
         PersonalSettings mysett = PersonalSettings.getInstance();
-        Log.i(TAG, "onCreate: user name " + mysett.UserName);
+        Log.i(TAG, "onCreate: user name " + mysett.getUserName());
         ArrayList<Transactions> transactionsList = mysett.getAllTrans();
         Log.d(TAG, "onCreate: mysett.getAllTrans() list size is " + mysett.getAllTrans().size());
 

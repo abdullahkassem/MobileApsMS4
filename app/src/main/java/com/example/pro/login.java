@@ -39,6 +39,10 @@ public class login extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        PersonalSettings p = PersonalSettings.getInstance();
+        p.setPossibleCurrencies(getResources().getStringArray(R.array.currency_names));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         signup = findViewById(R.id.button2);
@@ -113,11 +117,11 @@ public class login extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         pd.dismiss();
                         sendUsertonextpage();
-                        Toast.makeText(login.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(login.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
 
                     } else {
                         pd.dismiss();
-                        Toast.makeText(login.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(login.this, "Login Failed"+task.getException(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
