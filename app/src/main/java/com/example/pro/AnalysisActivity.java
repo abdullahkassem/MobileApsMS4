@@ -15,14 +15,18 @@ import android.view.View;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class AnalysisActivity extends AppCompatActivity {
 
@@ -121,7 +125,7 @@ public class AnalysisActivity extends AppCompatActivity {
                             if(f<0)
                                 f=f*-1;
                             pieEnt_cat.add( new PieEntry( f,catName ) );
-                            Log.d(TAG, "Category name: "+catName+" has total of "+p.getCategoryTotal(catName));
+                            //Log.d(TAG, "Category name: "+catName+" has total of "+p.getCategoryTotal(catName));
                         }
 
                         PieDataSet pieDS_cat = new PieDataSet(pieEnt_cat,"Accounts Balance");
@@ -140,9 +144,34 @@ public class AnalysisActivity extends AppCompatActivity {
                         break;
                     case R.id.lineChartPage:
 
-                        ArrayList<Entry> lineChartValues = new ArrayList<Entry>();
+                        /*linechart.setVisibility(View.VISIBLE);
+
+                        ArrayList<ILineDataSet> datasets = new ArrayList<>();
+                        for(FinancialAccount f:p.getMyAccounts())
+                        {
+                            ArrayList<Entry> lineChartValues = new ArrayList<Entry>();
+                            for(Transactions t:f.getListOfTransactions())
+                            {
+                                Log.i(TAG, "x: "+t.getTimestamp()+" y: "+(int)f.getCurrentBalance() );
+                                lineChartValues.add(new Entry(t.getTimestamp().getSeconds() , (int)f.getCurrentBalance() ) );
+                            }
+
+                            LineDataSet lds = new LineDataSet(lineChartValues,f.getName());
+
+                            lds.setValueTextSize(16f);
+                            datasets.add(lds);
+                        }
+
+                        LineData data = new LineData(datasets);
+                        linechart.setData(data);
+                        linechart.invalidate();
 
 
+                        //linechart.animate();
+
+
+
+*/
                         break;
                 }
 

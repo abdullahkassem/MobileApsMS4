@@ -54,7 +54,7 @@ public class Mainmenu_Activity extends AppCompatActivity implements View.OnClick
                     Log.i(TAG, "onCreate: Progress Value is Nan");
                     ProgressValue=0;
                 }
-
+                Log.i(TAG, "Thread Progress value is "+ProgressValue);
                 progressBar.setProgress((int)ProgressValue);
                 percentagetxt.setText(String.format("%s %%", progressBar.getProgress()));
                 progressBarHandler.postDelayed(this, 500);

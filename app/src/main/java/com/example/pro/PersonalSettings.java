@@ -183,7 +183,7 @@ public class PersonalSettings implements Serializable {
         {
             for(Transactions t:f.getListOfTransactions())
             {
-                Log.d(TAG, "getCat "+t.getCategory());
+                //Log.d(TAG, "getCat "+t.getCategory());
                 if(t.getCategory().equals(catName))
                 {
 
@@ -297,7 +297,7 @@ public class PersonalSettings implements Serializable {
         {
             if(s.equals(Categories.get(i)))
             {
-                Log.e("TAG", "addCategory: Category with same name exists" );
+                //Log.e("TAG", "addCategory: Category with same name exists" );
                 return false;
             }
         }
