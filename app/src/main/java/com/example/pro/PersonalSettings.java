@@ -331,6 +331,19 @@ public class PersonalSettings implements Serializable {
         return this.moneyRemaining;
     }
 
+    FinancialAccount findTransAcc(String tID)
+    {
+        for(FinancialAccount f:myAccounts)
+        {
+            for(Transactions t:f.getListOfTransactions())
+            {
+                if(t.getDocID().equals(tID))
+                    return f;
+            }
+        }
+
+        return null;
+    }
 
 
 }

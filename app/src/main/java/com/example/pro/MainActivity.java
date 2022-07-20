@@ -2,10 +2,13 @@ package com.example.pro;//package tabian.com.listadapter;
 
 //import android.support.v7.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -58,5 +61,23 @@ public class MainActivity extends AppCompatActivity {
 
         TransactionsListAdapter adapter = new TransactionsListAdapter(this, R.layout.activity_list, transactionsList);
         mListView.setAdapter(adapter);
+
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                FirestoreAPI f = FirestoreAPI.getInstance();
+                PersonalSettings p = PersonalSettings.getInstance();
+                String id= transactionsList.get(i).getDocID();
+                FinancialAccount temp = p.findTransAcc(id);
+                if(temp==null)
+                    return true;
+                f.deleteTransaction(transactionsList.get(i).getDocID(),temp.getName());
+                transactionsList.remove(i);
+                TransactionsListAdapter adapter = new TransactionsListAdapter(MainActivity.this, R.layout.activity_list, transactionsList);
+                mListView.setAdapter(adapter);
+                return true;
+            }
+        });
     }
 }
