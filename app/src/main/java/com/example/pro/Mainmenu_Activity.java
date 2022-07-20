@@ -79,17 +79,12 @@ public class Mainmenu_Activity extends AppCompatActivity implements View.OnClick
         }
         else if(id == R.id.accounts_button)
         {
-//            FirestoreAPI f = FirestoreAPI.getInstance();;
-//            f.createUser("andrew","andrew@auc.edu", 0, false, 0, "egp");
-//            f.addAccount(10,10,10,"New");
-//            f.addTransaction("supermarket","food", Timestamp.now(),100,"New");
-
             Intent i = new Intent(this, AccountsDisplayActivity.class);
             startActivity(i);
         }else if(id == R.id.price_suggestions)
         {
-            Toast toast2 = Toast.makeText(getApplicationContext(), "Sorry, This feature is not Implemented\n Yet!!", Toast.LENGTH_SHORT);
-            toast2.show();
+            Intent i = new Intent(this, AnalysisActivity.class);
+            startActivity(i);
         }
     }
 }

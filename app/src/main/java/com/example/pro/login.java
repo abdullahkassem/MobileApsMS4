@@ -157,7 +157,7 @@ public class login extends AppCompatActivity {
 
                 Log.i(TAG, "run: Data is not loaded yet");
                 counter++;
-                if(counter > 20) {
+                if(counter > 80) {
                     nDialog.dismiss();
                     Toast.makeText(login.this, "Cant Load Data", Toast.LENGTH_LONG).show();
                     return;

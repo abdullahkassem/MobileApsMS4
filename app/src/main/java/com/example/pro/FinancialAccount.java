@@ -15,7 +15,6 @@ public class FinancialAccount {
         Name = name;
         OutstandingBalance = outBalance;
         CurrentBalance = outBalance;
-        Total = 0;
         Income = 0;
         Expense = 0;
     }
@@ -26,24 +25,15 @@ public class FinancialAccount {
         return Name;
     }
 
-    void CalculateTotal()
-    {
-        Total = Income - Expense;
-        calculateBalance();
-    }
 
-    void calculateBalance()
-    {
-        CurrentBalance = OutstandingBalance + Total;
-    }
 
     void TransactionUpdate(double amount){ //called whenever a transaction happens
         if(amount >= 0)
             Income += amount;
         else
-            Expense +=amount;
+            Expense += amount;
 
-        CalculateTotal();
+        CurrentBalance = CurrentBalance + amount;
 
     }
 

@@ -7,9 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +35,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,24 +54,62 @@ public class AddTransaction extends AppCompatActivity {
         PersonalSettings mySett = PersonalSettings.getInstance();
 
         EditText transName  = (EditText) findViewById(R.id.EnterTransName);
-        EditText transCategory  = (EditText) findViewById(R.id.EnterTransCategory);
+        Spinner transCategory  = (Spinner) findViewById(R.id.category_spinner);
         EditText transAmount  = (EditText) findViewById(R.id.Enteramount);
 
         Spinner chooseAcc = (Spinner) findViewById(R.id.account_spinner);
 
+        ArrayList<String> CategoryList = new ArrayList<>(mySett.getCategories());
 
-//        chooseAcc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                @Override
-//                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                    Log.i("TAG", "onItemSelected: Item selected is "+ adapterView.getItemAtPosition(i));
-//                }
-//
-//                @Override
-//                public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//                }
-//            }
-//        );
+        CategoryList.add("Add Category");
+
+        ArrayAdapter Categories_adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,CategoryList);
+        transCategory.setAdapter(Categories_adapter);
+
+        transCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == CategoryList.size()-1)
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(AddTransaction.this);
+
+                    final EditText edittext = new EditText(AddTransaction.this);
+                    alert.setMessage("Enter name of new Category");
+                    alert.setTitle("Create new Category");
+
+                    alert.setView(edittext);
+
+                    alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String YouEditTextValue = edittext.getText().toString();
+                            //CategoryList.add(0,YouEditTextValue);
+                            Categories_adapter.remove("Add Category");
+                            Categories_adapter.add(YouEditTextValue);
+                            mySett.addCategory(YouEditTextValue);
+                            CategoryList.add("Add Category");
+                            //transCategory.setSelection(CategoryList.size()-2);
+
+
+                            transCategory.setAdapter(Categories_adapter);
+                        }
+                    });
+
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.dismiss();
+
+                        }
+                    });
+
+                    alert.show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         ArrayAdapter accountNames = new ArrayAdapter(this, android.R.layout.simple_spinner_item ,mySett.getAccNames());
         chooseAcc.setAdapter(accountNames);
@@ -78,7 +120,7 @@ public class AddTransaction extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String TransName = String.valueOf(transName.getText());
-                String TransCategory = String.valueOf(transCategory.getText());
+                String TransCategory = (String) transCategory.getSelectedItem();
                 double Amount =  Double.parseDouble( transAmount.getText().toString());
                 String AccName = (String) chooseAcc.getSelectedItem();
                 //Log.i("TAG", "Spinner String is "+AccName);

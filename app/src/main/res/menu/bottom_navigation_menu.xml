@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/pieChartPageIncome"
+        android:enabled="true"
+        android:icon="@drawable/piechart_icon"
+        android:title="@string/piechartStr_income"/>
+    <item
+        android:id="@+id/pieChartPageExpense"
+        android:enabled="true"
+        android:icon="@drawable/piechart_icon"
+        android:title="Expense"/>
+    <item
+        android:id="@+id/pieChartPageCategory"
+        android:enabled="true"
+        android:icon="@drawable/piechart_icon"
+        android:title="Category"/>
+    <item
+        android:id="@+id/lineChartPage"
+        android:enabled="true"
+        android:icon="@drawable/linechart_icon"
+        android:title="@string/LineChart"/>
+
+</menu>

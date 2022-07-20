@@ -61,6 +61,21 @@ public class PersonalSettings implements Serializable {
 
     }
 
+    public double getCategoryTotal(String catName){
+        if(!Categories.contains(catName)) {
+            Log.w(TAG, "getCategoryTotal: Invalid Category" );
+            return 0;
+        }
+        double total=0;
+        for(Transactions t:getTransByCategory(catName))
+        {
+            total = total+t.getAmount();
+            //Log.d(TAG, "getCategoryTotal: Trans amount is "+t.getAmount());
+        }
+
+        return total;
+    }
+
     void setPossibleCurrencies(String[] arrayFromResource){
         PossibleCurrencies = new ArrayList<String>( Arrays.asList(arrayFromResource));
     }
@@ -103,6 +118,10 @@ public class PersonalSettings implements Serializable {
 
     void addTransaction(Transactions t, String accName)
     {
+        if(!Categories.contains(t.getCategory() ) ) {   //if no such Category exists add it
+            Log.i(TAG, "addTransaction: Added new Category to Class");
+            addCategory(t.getCategory());
+        }
         myAccounts.get(searchAccsByName(accName)).addTransaction(t);
     }
 
@@ -155,6 +174,25 @@ public class PersonalSettings implements Serializable {
 
         Log.w(TAG, " Did not find account with this Name" );
         return null;
+    }
+
+    private ArrayList<Transactions> getTransByCategory(String catName) {
+        ArrayList<Transactions> temp = new ArrayList<Transactions>();
+
+        for (FinancialAccount f:getMyAccounts())
+        {
+            for(Transactions t:f.getListOfTransactions())
+            {
+                Log.d(TAG, "getCat "+t.getCategory());
+                if(t.getCategory().equals(catName))
+                {
+
+                    temp.add(t);
+                }
+            }
+        }
+
+        return temp;
     }
 
 

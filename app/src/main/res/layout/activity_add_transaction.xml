@@ -57,22 +57,18 @@ tools:context=".AddTransaction"
 
         <TextView
             android:id="@+id/transaction_category"
-            android:layout_width="241dp"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="Transaction Category"
             android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/EnterTransCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Trasaction's Category"
-            android:inputType="text"
-            android:minHeight="48dp" />
+        <Spinner
+            android:id="@+id/category_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
 
     </LinearLayout>

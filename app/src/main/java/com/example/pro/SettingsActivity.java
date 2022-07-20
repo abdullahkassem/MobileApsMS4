@@ -4,6 +4,7 @@ import android.app.Person;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -125,10 +126,12 @@ public class SettingsActivity extends AppCompatActivity {
             notifications_switch = enable_noti.isChecked();
             budg = Double.parseDouble( budget_pref.getText());
             percent = usablePercentage.getValue();
-            curr = currency_select.getValue();
+            curr = currency_select.getEntry().toString();
+            Log.d("TAG", "SavePreferences: curr is "+ curr);
 
             PersonalSettings s = PersonalSettings.getInstance();
             s.setPersonalSettings(username,email,notifications_switch,budg,percent,curr);
+
 
             FirestoreAPI f = FirestoreAPI.getInstance();
             f.createUser(f.getMy_UID(),username,email, percent, notifications_switch, budg, curr);
