@@ -43,24 +43,27 @@ public class Mainmenu_Activity extends AppCompatActivity implements View.OnClick
         ProgressBar progressBar= (ProgressBar) findViewById(R.id.progressBar);
         TextView percentagetxt = (TextView) findViewById(R.id.Progress_percentage_view);
 
-        ProgressValue = mysettings.CalculateMoneyRemaining() / mysettings.getBudget();
-        if(Double.isNaN(ProgressValue)) {
-            Log.i(TAG, "onCreate: Progress Value is Nan");
-            ProgressValue=99;
-        }
 
-        progressBar.setProgress((int)ProgressValue);
 
         Handler progressBarHandler = new Handler();
         progressBarHandler.post(new Runnable() {
             public void run() {
+
+                ProgressValue = mysettings.getProgress();
+                if(Double.isNaN(ProgressValue)) {
+                    Log.i(TAG, "onCreate: Progress Value is Nan");
+                    ProgressValue=0;
+                }
+
                 progressBar.setProgress((int)ProgressValue);
+                percentagetxt.setText(String.format("%s %%", progressBar.getProgress()));
+                progressBarHandler.postDelayed(this, 500);
             }
         });
 
 
-        Log.i("TAG", "onCreate: Progress Value is "+ progressBar.getProgress());
-        percentagetxt.setText(String.format("%s %%", progressBar.getProgress()));
+        //Log.i("TAG", "onCreate: Progress Value is "+ progressBar.getProgress());
+
     }
 
     @Override

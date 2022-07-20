@@ -2,6 +2,7 @@ package com.example.pro;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.nfc.cardemulation.CardEmulation;
 import android.util.Log;
 
@@ -280,8 +281,15 @@ public class PersonalSettings implements Serializable {
         return sum;
     }
 
+    int getProgress(){
+
+        int ProgressValue = (int)(CalculateMoneyRemaining()*100 / getBudget() );
+        //Log.i(TAG, "onCreate: Progress value = "+ProgressValue+" = calculate money remaining "+CalculateMoneyRemaining() +" / "+getBudget());
+        return ProgressValue;
+    }
+
     double CalculateMoneyRemaining(){
-        this.moneyRemaining = Budget - totalAccountsBalance;
+        this.moneyRemaining = Budget - CalculateTotalAccountsBalance();
         return this.moneyRemaining;
     }
 

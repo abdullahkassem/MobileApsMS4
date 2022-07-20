@@ -13,9 +13,9 @@ public class FinancialAccount {
 
     FinancialAccount(String name,double outBalance){
         Name = name;
-        CurrentBalance = 0;
-        Total = 0;
         OutstandingBalance = outBalance;
+        CurrentBalance = outBalance;
+        Total = 0;
         Income = 0;
         Expense = 0;
     }
@@ -28,7 +28,8 @@ public class FinancialAccount {
 
     void CalculateTotal()
     {
-        Total = Income + Expense;
+        Total = Income - Expense;
+        calculateBalance();
     }
 
     void calculateBalance()
@@ -42,21 +43,15 @@ public class FinancialAccount {
         else
             Expense +=amount;
 
+        CalculateTotal();
+
     }
 
-    void setTransactionsList(ArrayList<Transactions> TList)
-    {
-        this.ListOfTransactions = TList;
-    }
 
     void addTransaction(Transactions t)
     {
-//        if(t==null)
-//            Log.e(TAG, "addTrans: t is null " );
-//        else
-//            Log.i(TAG, "addTrans: t is not null " );
-
         this.ListOfTransactions.add(t);
+        TransactionUpdate(t.getAmount());
     }
 
     void TransferBalance() {
